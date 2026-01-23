@@ -1,12 +1,3 @@
-/*const heading = React.createElement(
-  "h1",
-  { id: "title", key: "h1" },
-  "Hello from React",
-);
-
-console.log(heading);
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(heading);*/
 
 const parent = React.createElement(
   "div",
@@ -19,7 +10,8 @@ const parent = React.createElement(
     React.createElement("h2", { key: "h2" }, "I am h2 tag"),
   ]))
 );
-console.log(parent);
+
+console.log(parent); //object representation of the parent element
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

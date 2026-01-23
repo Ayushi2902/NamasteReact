@@ -1,0 +1,26 @@
+{
+  "name": "yes",
+  "version": "1.0.0",
+  "description": "this is namaste react by Akshay Saini",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ayushi2902/NmasteReact.git"
+  },
+  "keywords": [
+    "react",
+    "namaste",
+    "react",
+    "Akshay",
+    "Saini"
+  ],
+  "author": "Akshay Saini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ayushi2902/NmasteReact/issues"
+  },
+  "homepage": "https://github.com/Ayushi2902/NmasteReact#readme"
+}
