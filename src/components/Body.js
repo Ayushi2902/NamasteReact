@@ -1,79 +1,75 @@
 
-import React,{ useState } from "react";
+import Shimmer from "./shimmer";
+import { useEffect, useState } from "react";
+import RestaurantCard from "./RestaurantCard";
+import resList from "../utils/mockData";
 
 
 const Body = () => {
-
-
-  //state variable - super powerful variable - react variable
-
-  const [listofrestaurant, setListofrestaurant] = useState([
-    {
-      data: {
-        resName: "Pizza Hut",
-        cuisine: ["Pizza", "Italian"],
-        rating: "4.5",
-        timemins: "30",
-        costForTwo: 500,
-        cloudinaryImageId:
-          "https://images.unsplash.com/photo-1604382355076-af4b0eb60143",
-      },
-    },
-    {
-      data: {
-        resName: "Burger King",
-        cuisine: ["Burger", "Fast Food"],
-        rating: "4.2",
-        timemins: "25",
-        costForTwo: 300,
-        cloudinaryImageId:
-          "https://images.unsplash.com/photo-1550547660-d9450f859349",
-      },
-    },
-    {
-      data: {
-        resName: "Subway",
-        cuisine: ["Sandwich", "Fast Food"],
-        rating: "3.0",
-        timemins: "20",
-        costForTwo: 200,
-        cloudinaryImageId:
-          "https://images.unsplash.com/photo-1631515242808-497c3fbd3972",
-      },
-    },
-  ]);
+  const [listofrestaurant, setListofrestaurant] = useState([]);
+  const [filteredRestaurant, setFilteredRestaurant] = useState([]);
   
 
-return (
-  <>
-    <div className="body-container">
-      <button
-        className="filter-btn"
-        onClick={() => {
-          console.log("Before:", listofrestraunt.length);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-          const filteredList = listofrestraunt.filter(
-            (res) => parseFloat(res.data.rating) > 4,
-          );
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6448&lng=77.216721&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
+      );
+      const json = await response.json();
 
-          console.log("After:", filteredList.length);
+      console.log("API Response:", json);
 
-          setListofrestraunt(filteredList);
-        }}
-      >
-        Top Rated Restaurants
-      </button>
-    </div>
+      
+      let restaurants = [];
+      for (let card of json?.data?.cards || []) {
+        if (card?.card?.card?.gridElements?.infoWithStyle?.restaurants) {
+          restaurants = card.card.card.gridElements.infoWithStyle.restaurants;
+          break;
+        }
+      }
 
+      
+      if (restaurants.length > 0) {
+        setListofrestaurant(restaurants);
+        setFilteredRestaurant(restaurants);
+      } else {
+        setListofrestaurant(resList);
+        setFilteredRestaurant(resList);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setListofrestaurant(resList);
+      setFilteredRestaurant(resList);
+    }
+  };
+
+ return listofrestaurant.length === 0 ? <Shimmer /> : (
     <div className="body">
+      <div className="filter">
+        <button
+          className="filter-btn"
+          onClick={() => {
+            const filteredList = listofrestaurant.filter(
+              (res) => res.info.avgRating > 4.5,
+            );
+            setFilteredRestaurant(filteredList);
+          }}
+        >
+          Top Rated Restaurants
+        </button>
+      </div>
+
       <div className="res-container">
-        {listofrestraunt.map((res) => (
-          <RestaurantCard key={res.data.resName} resData={res.data} />
+        {filteredRestaurant.map((restaurant) => (
+          <RestaurantCard key={restaurant.info.id} resData={restaurant} />
         ))}
       </div>
     </div>
-  </>
-);
+  );
 };
 
 export default Body;

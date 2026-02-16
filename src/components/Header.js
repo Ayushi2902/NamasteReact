@@ -2,14 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { LOGO_URL } from "../utils/constants";
 const Header = () => {
+  let btnName = "Login";
+
   return (
     <div className="header">
       <div className="logo">
-        <img
-          className="logo"
-          src={LOGO_URL}
-          alt="logo"
-        />
+        <img className="logo" src={LOGO_URL} alt="logo" />
       </div>
       <div className="nav-items">
         <ul>
@@ -17,11 +15,18 @@ const Header = () => {
           <li>About Us</li>
           <li>Contact</li>
           <li>Cart</li>
+          <button
+            className="login"
+            onClick={() => {
+              btnName = "Logout";
+            }}
+          >
+            {btnName}
+          </button>
         </ul>
       </div>
     </div>
   );
 };
-
 
 export default Header;
