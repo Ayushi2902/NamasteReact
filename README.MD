@@ -84,3 +84,9 @@ There are two types of export and import -
 
  - useState() - 80% this - to generate super powerful react variables
  - useEffect() - 20% this
+
+
+
+ # Routing in web apps
+ - client side routing
+ - server side routing
