@@ -1,41 +1,57 @@
-import { useState, useEffect } from "react";
-import Shimmer from "./shimmer";
+import { useParams } from "react-router-dom";
+import menuData from "../utils/menuMock";
+import Shimmer from "./Shimmer";
 
 const RestaurantMenu = () => {
-  const [resInfo, setMenu] = useState(null);
+  const { resId } = useParams();
 
-  useEffect(() => {
-    fetchMenu();
-  }, []);
+  const restaurantData = menuData?.restaurants?.[resId];
 
-  const fetchMenu = async () => {
-    try {
-      const data = await fetch(
-        "https://corsproxy.io/?" +
-          "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.5721353&lng=77.2139292&restaurantId=200760",
-      );
+  if (!restaurantData) return <h2>Restaurant Not Found</h2>;
 
-      const json = await data.json();
+  const resInfo = restaurantData.data.cards.find(
+    (card) => card?.card?.card?.info,
+  )?.card?.card?.info;
 
-      // IMPORTANT LINE 👇
-      const restaurantData = json?.data?.cards[2]?.card?.card?.info;
+  if (!resInfo) return <Shimmer />;
 
-      setMenu(restaurantData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { name, cuisines, costForTwoMessage, avgRating, sla } = resInfo;
 
-  if (resInfo === null) return <Shimmer />;
+  const menuCards =
+    restaurantData.data.cards.find((card) => card?.groupedCard)?.groupedCard
+      ?.cardGroupMap?.REGULAR?.cards || [];
 
-  const { name, cuisines, costForTwoMessage, avgRating } = resInfo;
+  const categories = menuCards.filter(
+    (c) =>
+      c?.card?.card?.["@type"] ===
+      "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory",
+  );
 
   return (
-    <div className="menu">
+    <div style={{ padding: "20px" }}>
       <h1>{name}</h1>
       <h3>{cuisines?.join(", ")}</h3>
       <h3>{costForTwoMessage}</h3>
       <h4>⭐ {avgRating}</h4>
+      <h4>🕒 {sla?.slaString}</h4>
+
+      <hr />
+
+      {categories.map((category) => (
+        <div key={category.card.card.title}>
+          <h2>{category.card.card.title}</h2>
+
+          {category.card.card.itemCards.map((item) => {
+            const info = item.card.info;
+            return (
+              <div key={info.id} style={{ marginBottom: "10px" }}>
+                <h4>{info.name}</h4>
+                <p>₹ {info.price / 100}</p>
+              </div>
+            );
+          })}
+        </div>
+      ))}
     </div>
   );
 };
