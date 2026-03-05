@@ -90,3 +90,16 @@ There are two types of export and import -
  # Routing in web apps
  - client side routing
  - server side routing
+
+
+
+
+
+
+ STEPS TO PUSH FILE
+ls
+git init
+git status
+git add .    (space de kr dot)
+git commit -m "meta"
+git push -u origin main

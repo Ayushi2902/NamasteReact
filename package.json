@@ -1,40 +1,25 @@
 {
-  "name": "yes",
+  "name": "namaste-react",
   "version": "1.0.0",
   "description": "this is namaste react by Akshay Saini",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html",
-    "test": "jest"
+    "build": "parcel build index.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Ayushi2902/NmasteReact.git"
-  },
-  "keywords": [
-    "react",
-    "namaste",
-    "react",
-    "Akshay",
-    "Saini"
-  ],
-  "author": "Akshay Saini",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Ayushi2902/NmasteReact/issues"
-  },
-  "homepage": "https://github.com/Ayushi2902/NmasteReact#readme",
   "devDependencies": {
-    "parcel": "^2.16.3"
+    "@babel/core": "^7.29.0",
+    "@babel/preset-react": "^7.28.5",
+    "@parcel/transformer-babel": "^2.16.4",
+    "@tailwindcss/postcss": "^4.2.1",
+    "autoprefixer": "^10.4.27",
+    "parcel": "^2.16.4",
+    "postcss": "^8.5.8"
   },
   "dependencies": {
     "react": "^19.2.4",
+    "react-audio-player": "^0.17.0",
     "react-dom": "^19.2.4",
-    "react-router-dom": "^6.30.3"
-  },
-  "browserlist": [
-    "last 10 Chrome version",
-    "last 2 Firefox version",
-    "last 2 Safari version"
-  ]
+    "react-router": "^6.13.0",
+    "react-router-dom": "^6.13.0"
+  }
 }

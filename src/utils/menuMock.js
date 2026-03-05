@@ -159,7 +159,7 @@ const menuData = {
       },
     },
 
-    "708017": {
+    708017: {
       data: {
         cards: [
           {

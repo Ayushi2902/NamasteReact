@@ -11,7 +11,7 @@ class About extends Component{
   }
 
 
-
+  
   componentDidMount(){
     //api is called here because it re-renders our component
 
